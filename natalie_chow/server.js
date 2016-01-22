@@ -9,7 +9,7 @@ const mafiasRouter = require(__dirname + '/routes/mafias_router');
 const actionsRouter = require(__dirname + '/routes/actions_router');
 
 app.use('/api', townsRouter);
-// app.use('/api', mafiasRouter);
+app.use('/api', mafiasRouter);
 
 // NOTE: non-rest
 // app.use(actionsRouter);

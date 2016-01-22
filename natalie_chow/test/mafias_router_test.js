@@ -7,18 +7,18 @@ const mongoose = require('mongoose');
 
 process.env.MONGOLAB_URI = 'mongodb://localhost/salem_test';
 const server = require(__dirname + '/../server');
-const Town = require(__dirname + '/../models/town');
+const Mafia = require(__dirname + '/../models/mafia');
 
-describe('The towns api', () => {
+describe('The mafia api', () => {
   after((done) => {
     mongoose.connection.db.dropDatabase(() => {
       done();
     });
   });
 
-  it('should be able to retrieve all towns', (done) => {
+  it('should be able to retrieve all mafias', (done) => {
     request('localhost:3000')
-      .get('/api/towns')
+      .get('/api/mafias')
       .end((err, res) => {
         expect(err).to.eql(null);
         expect(res).to.have.status(200);
@@ -27,14 +27,14 @@ describe('The towns api', () => {
       });
   });
 
-  it('should be able to create a town', (done) => {
+  it('should be able to create a mafia', (done) => {
     request('localhost:3000')
-      .post('/api/towns')
-      .send({name: 'random town'})
+      .post('/api/mafias')
+      .send({name: 'random mafia'})
       .end((err, res) => {
         expect(err).to.eql(null);
         expect(res).to.have.status(200);
-        expect(res.body.name).to.eql('random town');
+        expect(res.body.name).to.eql('random mafia');
         expect(res.body).to.have.property('_id');
         done();
       });
@@ -42,27 +42,27 @@ describe('The towns api', () => {
 
   describe('requests that require a populated DB', () => {
     beforeEach((done) => {
-      Town.create({name: 'test town'}, (err, data) => {
-        this.testTown = data;
+      Mafia.create({name: 'test mafia'}, (err, data) => {
+        this.testMafia = data;
         done();
       });
     });
 
-    it('should be able to retrieve a specific town', (done) => {
+    it('should be able to retrieve a specific mafia', (done) => {
       request('localhost:3000')
-        .get('/api/towns/' + this.testTown._id)
+        .get('/api/mafias/' + this.testMafia._id)
         .end((err, res) => {
           expect(err).to.eql(null);
           expect(res.body).to.be.an('array');
-          expect(res.body[0].name).to.eql('test town');
+          expect(res.body[0].name).to.eql('test mafia');
           done();
         });
     });
 
-    it('should be able to update a specific town', (done) => {
+    it('should be able to update a specific mafia', (done) => {
       request('localhost:3000')
-        .put('/api/towns/' + this.testTown._id)
-        .send({name: 'new test town'})
+        .put('/api/mafias/' + this.testMafia._id)
+        .send({name: 'new mafia'})
         .end((err, res) => {
           expect(err).to.eql(null);
           expect(res).to.have.status(200);
@@ -71,9 +71,9 @@ describe('The towns api', () => {
         });
     });
 
-    it('should be able to delete a specific town', (done) => {
+    it('should be able to delete a specific mafia', (done) => {
       request('localhost:3000')
-        .delete('/api/towns/' + this.testTown._id)
+        .delete('/api/mafias/' + this.testMafia._id)
         .end((err, res) => {
           expect(err).to.eql(null);
           expect(res).to.have.status(200);
@@ -82,4 +82,5 @@ describe('The towns api', () => {
         });
     });
   });
+
 });
