@@ -10,8 +10,13 @@ const server = require(__dirname + '/../server');
 const Town = require(__dirname + '/../models/town');
 
 describe('The towns api', () => {
+  before(() => {
+    server.listen(3000);
+  });
+
   after((done) => {
     mongoose.connection.db.dropDatabase(() => {
+      server.close();
       done();
     });
   });

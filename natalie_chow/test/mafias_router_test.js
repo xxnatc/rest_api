@@ -10,8 +10,13 @@ const server = require(__dirname + '/../server');
 const Mafia = require(__dirname + '/../models/mafia');
 
 describe('The mafia api', () => {
+  before(() => {
+    server.listen(3000);
+  });
+
   after((done) => {
     mongoose.connection.db.dropDatabase(() => {
+      server.close();
       done();
     });
   });
