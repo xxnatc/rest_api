@@ -21,12 +21,26 @@ describe('The towns api', () => {
       .get('/api/towns')
       .end((err, res) => {
         expect(err).to.eql(null);
+        expect(res).to.have.status(200);
         expect(res.body).to.be.an('array');
         done();
       });
   });
 
-  describe('api that requires a town in DB', () => {
+  it('should be able to create a town', (done) => {
+    request('localhost:3000')
+      .post('/api/towns')
+      .send({name: 'random town'})
+      .end((err, res) => {
+        expect(err).to.eql(null);
+        expect(res).to.have.status(200);
+        expect(res.body.name).to.eql('random town');
+        expect(res.body).to.have.property('_id');
+        done();
+      });
+  });
+
+  describe('requests that requires a populated DB', () => {
     beforeEach((done) => {
       Town.create({name: 'test town'}, (err, data) => {
         this.testTown = data;
@@ -41,6 +55,29 @@ describe('The towns api', () => {
           expect(err).to.eql(null);
           expect(res.body).to.be.an('array');
           expect(res.body[0].name).to.eql('test town');
+          done();
+        });
+    });
+
+    it('should be able to update a specific town', (done) => {
+      request('localhost:3000')
+        .put('/api/towns/' + this.testTown._id)
+        .send({name: 'new test town'})
+        .end((err, res) => {
+          expect(err).to.eql(null);
+          expect(res).to.have.status(200);
+          expect(res.body.msg).to.eql('update successful');
+          done();
+        });
+    });
+
+    it('should be able to delete a specific town', (done) => {
+      request('localhost:3000')
+        .delete('/api/towns/' + this.testTown._id)
+        .end((err, res) => {
+          expect(err).to.eql(null);
+          expect(res).to.have.status(200);
+          expect(res.body.msg).to.eql('delete successful');
           done();
         });
     });
