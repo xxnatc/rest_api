@@ -26,7 +26,6 @@ describe('The action router', () => {
       .end((err, res) => {
         expect(err).to.eql(null);
         expect(res).to.have.status(200);
-        console.log(res.body);
         expect(res.body).to.be.an('object');
         expect(res.body).to.have.keys(['townsPopulation', 'mafiasPopulation', 'totalPopulation']);
         done();

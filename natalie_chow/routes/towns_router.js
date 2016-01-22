@@ -32,7 +32,7 @@ townsRouter.put('/towns/:id', jsonParser, (req, res) => {
   var townData = req.body;
   delete townData._id;
 
-  Town.update({ _id: req.params.id }, townData, (err, data) => {
+  Town.update({ _id: req.params.id }, townData, (err) => {
     if (err) return dbErrorHandler(err, res);
     res.status(200).json({ msg: 'update successful'});
   });

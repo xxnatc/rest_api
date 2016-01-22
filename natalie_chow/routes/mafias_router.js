@@ -32,7 +32,7 @@ mafiasRouter.put('/mafias/:id', jsonParser, (req, res) => {
   var mafiaData = req.body;
   delete mafiaData._id;
 
-  Mafia.update({ _id: req.params.id }, mafiaData, (err, data) => {
+  Mafia.update({ _id: req.params.id }, mafiaData, (err) => {
     if (err) return dbErrorHandler(err, res);
     res.status(200).json({ msg: 'update successful'});
   });
