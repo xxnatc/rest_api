@@ -3,8 +3,8 @@ const chaiHttp = require('chai-http');
 chai.use(chaiHttp);
 const expect = chai.expect;
 const request = chai.request;
-const mongoose = require('mongoose');
 
+const mongoose = require('mongoose');
 process.env.MONGOLAB_URI = 'mongodb://localhost/salem_test';
 const server = require(__dirname + '/../server');
 

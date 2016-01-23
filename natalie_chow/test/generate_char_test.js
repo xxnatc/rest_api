@@ -1,10 +1,10 @@
 const expect = require('chai').expect;
-const generateChar = require(__dirname + '/../lib/generate_characters');
 
 const mongoose = require('mongoose');
 process.env.MONGOLAB_URI = 'mongodb://localhost/salem_test';
 const server = require(__dirname + '/../server');
 
+const generateChar = require(__dirname + '/../lib/generate_characters');
 const Town = require(__dirname + '/../models/town');
 const Mafia = require(__dirname + '/../models/mafia');
 
