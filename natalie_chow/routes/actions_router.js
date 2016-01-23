@@ -2,6 +2,10 @@ const express = require('express');
 
 const dbErrorHandler = require(__dirname + '/../lib/db_error_handler');
 const generateChar = require(__dirname + '/../lib/generate_characters');
+const gameStatus = require(__dirname + '/../lib/game_status');
+const gameOver = require(__dirname + '/../lib/game_over');
+const gameDay = require(__dirname + '/../lib/game_day');
+const gameNight = require(__dirname + '/../lib/game_night');
 
 const Town = require(__dirname + '/../models/town');
 const Mafia = require(__dirname + '/../models/mafia');
@@ -62,4 +66,24 @@ actionsRouter.get('/newgame', (req, res) => {
       res.status(200).json({ msg: 'new game generation successful'});
     });
   });
+});
+
+actionsRouter.get('/day', (req, res) => {
+  gameStatus()
+    .then((values) => {
+      gameDay(values, res);
+    })
+    .catch((values) => {
+      gameOver(values, res);
+    });
+});
+
+actionsRouter.get('/night', (req, res) => {
+  gameStatus()
+    .then((values) => {
+      gameNight(values, res);
+    })
+    .catch((values) => {
+      gameOver(values, res);
+    });
 });
