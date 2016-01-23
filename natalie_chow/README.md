@@ -75,4 +75,14 @@ GET /census
 // '{ "townsPopulation": "12", "mafiasPopulation": "8", "totalPopulation": "20" }'
 ```
 
-> More actions coming soon!
+##### New random game
+```
+GET /newgame
+```
+will reset the database and generate a total of 14 characters (at least 5 towns and 5 mafias) with random settings. Then check out the new population with a `GET` to `/census`!
+
+##### Massacre
+To erase all characters in both teams, do the following:
+```
+GET /wipe
+```
