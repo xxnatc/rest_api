@@ -27,9 +27,37 @@ describe('The action router', () => {
         expect(err).to.eql(null);
         expect(res).to.have.status(200);
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.keys(['townsPopulation', 'mafiasPopulation', 'totalPopulation']);
+        expect(res.body).to.have.keys(['towns', 'mafias', 'totalPopulation']);
         done();
       });
   });
 
+  it('should be able to wipe the database', (done) => {
+    request('localhost:3000')
+      .get('/wipe')
+      .end((err, res) => {
+        expect(err).to.eql(null);
+        expect(res).to.have.status(200);
+        expect(res.body.msg).to.eql('wipe successful');
+        done();
+      });
+  });
+
+  it('should be able to generate some characters', (done) => {
+    request('localhost:3000')
+      .get('/newgame')
+      .end((err, res) => {
+        expect(err).to.eql(null);
+        expect(res).to.have.status(200);
+        expect(res.body.msg).to.eql('new game generation successful');
+
+        request('localhost:3000')
+          .get('/census')
+          .end((err, res) => {
+            expect(err).to.eql(null);
+            expect(res.body.totalPopulation).to.be.above(0);
+            done();
+          });
+      });
+  });
 });

@@ -1,0 +1,6 @@
+{
+  "charNames": ["Bilbo", "Thorin", "Dwalin", "Balin", "Gloin", "Kili", "Fili", "Dori", "Nori", "Ori", "Oin", "Bifur", "Bombur", "Bofur"],
+  "occupations": ["sheriff", "store owner", "senator", "bus driver", "bakery owner", "football player", "teacher", "babysitter", "cleaning lady"],
+  "weapons": ["axe", "bow and arrows", "crowbar", "AK-47", "flamethrower", "taser", "pokeball", "plastic bag", "dual pistols", "sledgehammer", "baseball bat", "portal gun", "jarate"],
+  "ranks": ["godfather", "zombie", "janitor", "level 1 thug", "level 2 thug", "level 3 thug", "nobody"]
+}
