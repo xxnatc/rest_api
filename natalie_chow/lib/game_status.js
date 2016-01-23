@@ -1,7 +1,8 @@
+const dbErrorHandler = require(__dirname + '/db_error_handler');
 const Town = require(__dirname + '/../models/town');
 const Mafia = require(__dirname + '/../models/mafia');
 
-module.exports = exports = () => {
+module.exports = exports = (res) => {
   var readTowns = new Promise((resolve) => {
     Town.find({}, (err, data) => {
       if (err) return dbErrorHandler(err, res);

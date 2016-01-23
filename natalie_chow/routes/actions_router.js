@@ -2,14 +2,10 @@ const express = require('express');
 
 const dbErrorHandler = require(__dirname + '/../lib/db_error_handler');
 const generateChar = require(__dirname + '/../lib/generate_characters');
-const gameStatus = require(__dirname + '/../lib/game_status');
-const gameOver = require(__dirname + '/../lib/game_over');
-const gameDay = require(__dirname + '/../lib/game_day');
-const gameNight = require(__dirname + '/../lib/game_night');
 
 const Town = require(__dirname + '/../models/town');
 const Mafia = require(__dirname + '/../models/mafia');
-
+var actionsHelper = require(__dirname + '/../lib/actions_helper');
 var actionsRouter = module.exports = exports = express.Router();
 
 actionsRouter.get('/census', (req, res) => {
@@ -36,54 +32,37 @@ actionsRouter.get('/census', (req, res) => {
   });
 });
 
-var clearDB = function(res) {
-  var deleteTowns = new Promise((resolve) => {
-    Town.remove({}, (err) => {
-      if (err) return dbErrorHandler(err, res);
-      resolve();
-    });
-  });
-
-  var deleteMafias = new Promise((resolve) => {
-    Mafia.remove({}, (err) => {
-      if (err) return dbErrorHandler(err, res);
-      resolve();
-    });
-  });
-
-  return Promise.all([deleteTowns, deleteMafias]);
-};
-
 actionsRouter.get('/wipe', (req, res) => {
-  clearDB(res).then(() => {
+  actionsHelper.clearDB(res).then(() => {
+    isNight = true;
     res.status(200).json({ msg: 'wipe successful'});
   });
 });
 
 actionsRouter.get('/newgame', (req, res) => {
-  clearDB(res).then(() => {
+  actionsHelper.clearDB(res).then(() => {
     generateChar().then(() => {
+      isNight = true;
       res.status(200).json({ msg: 'new game generation successful'});
     });
   });
 });
 
+var isNight = true;
+
 actionsRouter.get('/day', (req, res) => {
-  gameStatus()
-    .then((values) => {
-      gameDay(values, res);
-    })
-    .catch((values) => {
-      gameOver(values, res);
-    });
+  actionsHelper.dayActions(res);
 });
 
 actionsRouter.get('/night', (req, res) => {
-  gameStatus()
-    .then((values) => {
-      gameNight(values, res);
-    })
-    .catch((values) => {
-      gameOver(values, res);
-    });
+  actionsHelper.nightActions(res);
+});
+
+actionsRouter.get('/next', (req, res) => {
+  if (isNight) {
+    actionsHelper.nightActions(res);
+  } else {
+    actionsHelper.dayActions(res);
+  }
+  isNight = !isNight;
 });
