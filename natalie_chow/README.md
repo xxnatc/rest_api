@@ -2,7 +2,9 @@
 
 This API stimulates a simplified version of [Town of Salem](https://www.blankmediagames.com/), an online video game inspired by party games like Werewolf and Mafia.
 
-There are 2 main teams in this API, instead of 3 in the original gameplay. The teams are **towns** and **mafias**, whose respective goals are to eliminate each other and take the town to themselves.
+The Town of Salem is a town of chaos. Mafia members often kill at night, either targeting innocent townies or as a result mafia members turning on each other. Luckily, brave townies usually protect their friends at night, though not knowing which side they belong. If someone is killed at night, the town collectively convict a citizen of the crime and lynch them on the spot.
+
+There are 2 main teams in this version of the game, instead of 3 in the original gameplay. The teams are **towns** and **mafias**, whose respective goals are to eliminate each other and take the town to themselves.
 
 ## API Reference
 ### Towns
@@ -79,7 +81,7 @@ As night time falls on the Town of Salem, some brave towns will decide to protec
 ```
 GET /day
 ```
-If there is a crime committed in the previous night, the Town of Salem will vote and convict a citizen. He or she will be lynched on the spot.
+If there is a crime committed in the previous night, the Town of Salem will vote and convict a citizen. He or she will then be lynched. Nothing will happen if nobody was killed the previous night.
 
 ##### Next!
 ```

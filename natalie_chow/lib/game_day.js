@@ -19,7 +19,7 @@ module.exports = exports = (crimeLastNight, values, res) => {
     index -= towns.length;
     Mafia.remove({ _id: mafias[index]._id }, (err) => {
       if (err) return dbErrorHandler(err, res);
-      res.status(200).json({ msg: `Town of Salem voted for ${mafias[index].name} to be guilty. ${mafias[index].age}-year-old ${mafias[index].name} was a ${mafias[index].rank} in the mafias.`});
+      res.status(200).json({ msg: `Town of Salem voted for ${mafias[index].name} to be guilty. ${mafias[index].age}-year-old ${mafias[index].name} was a ${mafias[index].rank} in the mafia.`});
     });
   }
 };
