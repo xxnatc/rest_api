@@ -9,7 +9,7 @@ There are 2 main teams in this API, instead of 3 in the original gameplay. The t
 Town is a resource that follows the CRUD interface.
 
 ##### Create
-A `POST` request to `/api/towns` allows you to create a new townsman (or a town, as named in the game). Customize your new town by sending in data in a JSON-formatted object, which takes the follow options:
+A `POST` request to `/api/towns` allows you to create a new townie (or a town, as named in the game). Customize your new town by sending in data in a JSON-formatted object, which takes the follow options:
 
 | Property     | Data Type | Default    |
 | ------------ | --------- | ---------- |
@@ -37,7 +37,7 @@ A `DELETE` request to `/api/towns/[id]` will erase the town from the database.
 
 
 ### Mafias
-Structured similar to Town, Mafia is also a resource that follows the CRUD interface.
+Structured similarly to Town, Mafia is also a resource that follows the CRUD interface.
 
 ##### Create
 A `POST` request to `/api/mafias` allows you to create a new mafioso (or simply called a mafia). Customize your new mafia by sending in data in a JSON-formatted object, which takes the follow options:
@@ -67,22 +67,58 @@ Making a `PUT` request to `/api/mafias/[id]` lets you update the profile of the 
 ##### Delete
 A `DELETE` request to `/api/mafias/[id]` will erase the mafia from the database.
 
+
 ### Game Actions
+##### Nighttime mode
+```
+GET /night
+```
+As night time falls on the Town of Salem, some brave towns will decide to protect another citizen (town or mafia), while some mafias will pick their target (town or mafia). If a target is being protected for the night, they are prone to any attacks. Otherwise, you will hear the news of an unfortunate citizen.
+
+##### Daytime mode
+```
+GET /day
+```
+If there is a crime committed in the previous night, the Town of Salem will vote and convict a citizen. He or she will be lynched on the spot.
+
+##### Next!
+```
+GET /next
+```
+To allow easier and faster gameplay, every `GET` request to `/next` will advance the game by one stage. Consecutive `GET /next` requests will advance the game alternating daytime and nighttime, just like in the original Town of Salem video game.
+
 ##### Population count
-Performing the following request will retrieve the population of Salem:
 ```
 GET /census
 // '{ "townsPopulation": "12", "mafiasPopulation": "8", "totalPopulation": "20" }'
 ```
+This request will retrieve the population of Salem at that time.
 
 ##### New random game
 ```
 GET /newgame
 ```
-will reset the database and generate a total of 14 characters (at least 5 towns and 5 mafias) with random settings. Then check out the new population with a `GET` to `/census`!
+This will reset the database and generate a total of 14 characters (at least 5 towns and 5 mafias) with random settings. Then check out the new population with a `GET` to `/census`!
 
 ##### Massacre
-To erase all characters in both teams, do the following:
 ```
 GET /wipe
 ```
+This allows you to erase all citizens from both teams in one go.
+
+## TL;DR
+For a fast gameplay, start the server and then:
+1. Initialize with a set of 14 random characters
+```
+GET /newgame
+```
+2. Check your population at any time by
+```
+GET /census
+```
+3. Progress through the game, **repeat** until you receive a `GAME OVER` message
+```
+GET /next
+```
+
+You can also add, update, delete any characters at anytime.

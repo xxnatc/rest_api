@@ -3,7 +3,7 @@ const eslint = require('gulp-eslint');
 const mocha = require('gulp-mocha');
 
 gulp.task('lint', function() {
-  return gulp.src(['**/*.js', '!**/node_modules/*'])
+  return gulp.src(['**/*.js', '!**/node_modules/*', '!**/db/*'])
     .pipe(eslint({
       'rules': {
         'indent': [2, 2],
