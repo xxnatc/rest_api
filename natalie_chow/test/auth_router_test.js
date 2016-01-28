@@ -43,9 +43,7 @@ describe('Auth router', () => {
           password: bcrypt.hashSync('newpassword', 8)
         }
       };
-      (new User(userData)).save((err, data) => {
-        done();
-      });
+      User.create(userData, done);
     });
 
     it('should be able to sign in', (done) => {
