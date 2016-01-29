@@ -61,6 +61,18 @@ describe('The mafia api', () => {
       });
   });
 
+  it('should reject a post request without auth', (done) => {
+    request('localhost:3000')
+      .post('/api/mafias')
+      .send({name: 'random mafia'})
+      .end((err, res) => {
+        expect(err).to.eql(null);
+        expect(res).to.have.status(401);
+        expect(res.body.msg).to.eql('invalid token');
+        done();
+      });
+  });
+
   describe('requests that require a populated DB', () => {
     beforeEach((done) => {
       Mafia.create({name: 'test mafia'}, (err, data) => {
@@ -93,6 +105,18 @@ describe('The mafia api', () => {
         });
     });
 
+    it('should reject a put request without auth', (done) => {
+      request('localhost:3000')
+        .put('/api/mafias/' + this.testMafia._id)
+        .send({name: 'new mafia'})
+        .end((err, res) => {
+          expect(err).to.eql(null);
+          expect(res).to.have.status(401);
+          expect(res.body.msg).to.eql('invalid token');
+          done();
+        });
+    });
+
     it('should be able to delete a specific mafia', (done) => {
       request('localhost:3000')
         .delete('/api/mafias/' + this.testMafia._id)
@@ -101,6 +125,17 @@ describe('The mafia api', () => {
           expect(err).to.eql(null);
           expect(res).to.have.status(200);
           expect(res.body.msg).to.eql('delete successful');
+          done();
+        });
+    });
+
+    it('should reject a delete request without auth', (done) => {
+      request('localhost:3000')
+        .delete('/api/mafias/' + this.testMafia._id)
+        .end((err, res) => {
+          expect(err).to.eql(null);
+          expect(res).to.have.status(401);
+          expect(res.body.msg).to.eql('invalid token');
           done();
         });
     });
