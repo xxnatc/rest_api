@@ -12,7 +12,7 @@ describe('Basic HTTP Auth', () => {
         expect(obj.msg).to.eql('could not authenticate');
         done();
       }
-    }
+    };
     basicHTTP({}, testRes);
   });
 
@@ -24,7 +24,7 @@ describe('Basic HTTP Auth', () => {
       expect(testReq.basicHTTP.email).to.equal('test@example.com');
       expect(testReq.basicHTTP.password).to.equal('helloworld');
       done();
-    }
+    };
     basicHTTP(testReq, {}, testNext);
   });
 });

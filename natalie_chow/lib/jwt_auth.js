@@ -16,5 +16,5 @@ module.exports = exports = function(req, res, next) {
 
     req.user = user;
     next();
-  })
+  });
 };

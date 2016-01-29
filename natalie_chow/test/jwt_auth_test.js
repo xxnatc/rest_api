@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
-const jwt = require('jsonwebtoken');
 const jwtAuth = require(__dirname + '/../lib/jwt_auth');
 
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 process.env.MONGOLAB_URI = 'mongodb://localhost/salem_test';
@@ -16,10 +16,7 @@ describe('JWT auth that requires a populated DB', () => {
 
     var userData = {
       username: 'newuser@test.com',
-      auth: {
-        email: 'newuser@test.com',
-        password: bcrypt.hashSync('newpassword', 8)
-      }
+      auth: { email: 'newuser@test.com', password: bcrypt.hashSync('newpassword', 8) }
     };
     User.create(userData, (err, data) => {
       this.testUser = data;
@@ -36,9 +33,7 @@ describe('JWT auth that requires a populated DB', () => {
 
   it('should allow access with a valid token', (done) => {
     var testReq = {
-      headers: {
-        token: jwt.sign({ id: this.testUser._id }, process.env.APP_SECRET)
-      }
+      headers: { token: jwt.sign({ id: this.testUser._id }, process.env.APP_SECRET) }
     };
     var testNext = () => {
       expect(testReq.user._id).to.eql(this.testUser._id);
@@ -53,9 +48,7 @@ describe('JWT auth that requires a populated DB', () => {
 describe('JWT auth', () => {
   it('should reject an invalid token', (done) => {
     var testReq = {
-      headers: {
-        token: jwt.sign({ id: 'randomid' }, 'wrongsecretkey')
-      }
+      headers: { token: jwt.sign({ id: 'randomid' }, 'wrongsecretkey') }
     };
     var testRes = {
       status: function(statusCode) {
@@ -73,9 +66,7 @@ describe('JWT auth', () => {
 
   it('should check for user existence', (done) => {
     var testReq = {
-      headers: {
-        token: jwt.sign({ id: 'doesnotexist56c4101d700a' }, process.env.APP_SECRET)
-      }
+      headers: { token: jwt.sign({ id: 'doesnotexist56c4101d700a' }, process.env.APP_SECRET) }
     };
     var testRes = {
       status: function(statusCode) {

@@ -28,4 +28,4 @@ authRouter.get('/signin', basicHTTP, (req, res) => {
 
     res.json({ token: data.generateToken() });
   });
-})
+});

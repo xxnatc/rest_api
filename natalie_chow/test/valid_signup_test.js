@@ -13,10 +13,7 @@ describe('Signup validator', () => {
       server.listen(3000);
       var userData = {
         username: 'newuser@test.com',
-        auth: {
-          email: 'newuser@test.com',
-          password: bcrypt.hashSync('newpassword', 8)
-        }
+        auth: { email: 'newuser@test.com', password: bcrypt.hashSync('newpassword', 8) }
       };
       User.create(userData, done);
     });
@@ -71,7 +68,7 @@ describe('Signup validator', () => {
       validSignup(testReq, testRes);
     });
 
-    it('should reject a request with password shorter than 8 characters', () => {
+    it('should reject a request with password shorter than 8 characters', (done) => {
       var testReq = {
         body: { email: 'test@example.com', password: 'short' }
       };
