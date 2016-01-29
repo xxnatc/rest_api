@@ -14,8 +14,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "latest",
     "body-parser": "^1.14.2",
     "express": "^4.13.4",
+    "jsonwebtoken": "^5.5.4",
     "mongoose": "^4.3.6"
   },
   "devDependencies": {
