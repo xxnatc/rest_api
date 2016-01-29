@@ -65,7 +65,7 @@ describe('Auth router', () => {
         .end((err, res) => {
           expect(err).to.eql(null);
           expect(res).to.have.status(401);
-          expect(res.body.msg).to.eql('invalid password');
+          expect(res.body.msg).to.eql('invalid username or password');
           done();
         });
     });
@@ -77,7 +77,7 @@ describe('Auth router', () => {
         .end((err, res) => {
           expect(err).to.eql(null);
           expect(res).to.have.status(401);
-          expect(res.body.msg).to.eql('user does not exist');
+          expect(res.body.msg).to.eql('invalid username or password');
           done();
         });
     });

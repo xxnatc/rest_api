@@ -12,7 +12,7 @@ module.exports = exports = function(req, res, next) {
 
   User.findOne({ _id: decoded.id }, (err, user) => {
     if (err) return dbErrorHandler(err, res);
-    if (!user) return res.status(401).json({ msg: 'user does not exist' });
+    if (!user) return res.status(401).json({ msg: 'invalid token' });
 
     req.user = user;
     next();

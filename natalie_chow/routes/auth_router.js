@@ -21,10 +21,10 @@ authRouter.post('/signup', jsonParser, validSignup, (req, res) => {
 authRouter.get('/signin', basicHTTP, (req, res) => {
   User.findOne({ 'auth.email': req.basicHTTP.email }, (err, data) => {
     if (err) return dbErrorHandler(err, res);
-    if (!data) return res.status(401).json({ msg: 'user does not exist' });
+    if (!data) return res.status(401).json({ msg: 'invalid username or password' });
 
     if (!data.comparePassword(req.basicHTTP.password))
-      return res.status(401).json({ msg: 'invalid password' });
+      return res.status(401).json({ msg: 'invalid username or password' });
 
     res.json({ token: data.generateToken() });
   });
