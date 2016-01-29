@@ -7,8 +7,27 @@ The Town of Salem is a town of chaos. Mafia members often kill at night, either 
 There are 2 main teams in this version of the game, instead of 3 in the original gameplay. The teams are **towns** and **mafias**, whose respective goals are to eliminate each other and take the town to themselves.
 
 # API Reference
+## Users
+#### Sign up
+To create a new account, perform a `POST` request to `/api/signup` with a JSON-formatted object containing an email, password, and an optional username. For example:
+```
+{
+  "username": "meow",
+  "email": "meow@magenta.com",
+  "password": "ilovecatnip"
+}
+```
+If your registration is successful, you will receive a token to send along with future requests.
+
+#### Sign in
+If you have created an account earlier, you can log in by sending a `GET` request to `/api/signin` with a authorization header. The header should be formatted like the following:
+```
+Authorization: Basic dGVzdDJAdGVzdC5jb206cGFzc3dvcmQ=
+```
+The third piece is a base64 encoded string of `email:password`. In the above example, `dGVzdDJAdGVzdC5jb206cGFzc3dvcmQ=` is simply `testing@example.com:helloworld` encoded in base64.
+
 ## Towns
-Town is a resource that follows the CRUD interface.
+Town is a resource that follows the CRUD interface. Only users who are signed in can perform `POST`, `PUT`, and `DELETE` requests.
 
 #### Create
 A `POST` request to `/api/towns` allows you to create a new townie (or a town, as named in the game). Customize your new town by sending in data in a JSON-formatted object, which takes the follow options:
@@ -39,7 +58,7 @@ A `DELETE` request to `/api/towns/[id]` will erase the town from the database.
 
 
 ## Mafias
-Structured similarly to Town, Mafia is also a resource that follows the CRUD interface.
+Structured similarly to Town, Mafia is also a resource that follows the CRUD interface.  Users must be signed in to perform `POST`, `PUT`, and `DELETE` requests.
 
 #### Create
 A `POST` request to `/api/mafias` allows you to create a new mafioso (or simply called a mafia). Customize your new mafia by sending in data in a JSON-formatted object, which takes the follow options:
