@@ -1,5 +1,6 @@
 const express = require('express');
 const jsonParser = require('body-parser').json();
+const jwtAuth = require(__dirname + '/../lib/jwt_auth');
 
 const dbErrorHandler = require(__dirname + '/../lib/db_error_handler');
 const Town = require(__dirname + '/../models/town');
@@ -20,7 +21,7 @@ townsRouter.get('/towns', (req, res) => {
   });
 });
 
-townsRouter.post('/towns', jsonParser, (req, res) => {
+townsRouter.post('/towns', jwtAuth, jsonParser, (req, res) => {
   var newTown = new Town(req.body);
   newTown.save((err, data) => {
     if (err) return dbErrorHandler(err, res);
@@ -28,7 +29,7 @@ townsRouter.post('/towns', jsonParser, (req, res) => {
   });
 });
 
-townsRouter.put('/towns/:id', jsonParser, (req, res) => {
+townsRouter.put('/towns/:id', jwtAuth, jsonParser, (req, res) => {
   var townData = req.body;
   delete townData._id;
 
@@ -38,7 +39,7 @@ townsRouter.put('/towns/:id', jsonParser, (req, res) => {
   });
 });
 
-townsRouter.delete('/towns/:id', (req, res) => {
+townsRouter.delete('/towns/:id', jwtAuth, (req, res) => {
   Town.remove({ _id: req.params.id }, (err) => {
     if (err) return dbErrorHandler(err, res);
     res.status(200).json({ msg: 'delete successful'});
