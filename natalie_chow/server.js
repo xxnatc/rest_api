@@ -8,6 +8,7 @@ const townsRouter = require(__dirname + '/routes/towns_router');
 const mafiasRouter = require(__dirname + '/routes/mafias_router');
 const actionsRouter = require(__dirname + '/routes/actions_router');
 const authRouter = require(__dirname + '/routes/auth_router');
+const userRouter = require(__dirname + '/routes/user_router');
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:5000');
@@ -19,6 +20,7 @@ app.use((req, res, next) => {
 app.use('/api', townsRouter);
 app.use('/api', mafiasRouter);
 app.use('/api', authRouter);
+app.use('/api', userRouter);
 
 app.use(actionsRouter);
 
